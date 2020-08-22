@@ -66,10 +66,13 @@ class LinkedList:
 
     def new_head(self, value):
         if not self.head:
-            self.head = value
-            self.tail = value
+            self.head = Node(value)
+            self.tail = Node(value)
         else:
-# TODO start here with adding to the stack
+            new_node = Node(value)
+            new_node.next = self.head.next
+            self.head = new_node
+            return new_node
 
 
 
