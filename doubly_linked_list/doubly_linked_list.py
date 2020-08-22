@@ -95,7 +95,7 @@ class DoublyLinkedList:
             current_tail.next = new_node
             self.tail = new_node
             self.length = self.length + 1
-            return new_node.value
+            return self.tail.value
 
     """
     Removes the List's current tail node, making the 
@@ -104,7 +104,21 @@ class DoublyLinkedList:
     """
 
     def remove_from_tail(self):
-        pass
+        if self.tail is None:
+            return None
+        if self.tail == self.head:
+            current_tail = self.tail
+            self.tail = None
+            self.head = None
+            self.length = self.length - 1
+            return current_tail.value
+        else:
+            current_tail = self.tail
+            new_tail = self.tail.prev
+            new_tail.next = None
+            self.tail = new_tail
+            self.length = self.length - 1
+            return current_tail.value
 
     """
     Removes the input node from its current spot in the 
@@ -112,15 +126,24 @@ class DoublyLinkedList:
     """
 
     def move_to_front(self, node):
-        pass
+        new_head = node
+        current_head = self.head
+        current_head.prev = new_head
+        new_head.next = current_head
+        self.head = new_head
 
     """
     Removes the input node from its current spot in the 
     List and inserts it as the new tail node of the List.
     """
-
+# TODO pick up here working on appending to the back
     def move_to_end(self, node):
-        pass
+        new_node = node
+        current_tail = self.tail
+        current_tail.next = new_node
+        new_node.prev = current_tail
+        new_node.next = None
+        self.tail = new_node
 
     """
     Deletes the input node from the List, preserving the 
