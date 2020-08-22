@@ -33,7 +33,18 @@ class DoublyLinkedList:
     """
 
     def add_to_head(self, value):
-        pass
+        if self.head is None:
+            new_node = ListNode(value, prev=None, next=None)
+            self.head = new_node
+            self.tail = new_node
+            self.length = self.length + 1
+            return new_node.value
+        else:
+            new_node = ListNode(value, prev=None, next=self.head)
+            self.head.prev = new_node
+            self.head = new_node
+            self.length = self.length + 1
+            return self.head.value
 
     """
     Removes the List's current head node, making the
@@ -42,7 +53,21 @@ class DoublyLinkedList:
     """
 
     def remove_from_head(self):
-        pass
+        if self.head is None:
+            return None
+        if self.head == self.tail:
+            current_head = self.head
+            self.head = None
+            self.tail = None
+            self.length = self.length - 1
+            return current_head.value
+        else:
+            new_head = self.head.next
+            new_head.prev = None
+            current_head = self.head
+            self.head = new_head
+            self.length = self.length - 1
+            return current_head.value
 
     """
     Wraps the given value in a ListNode and inserts it 
@@ -51,7 +76,26 @@ class DoublyLinkedList:
     """
 
     def add_to_tail(self, value):
-        pass
+        if self.tail is None:
+            new_node = ListNode(value, prev=None, next=None)
+            self.head = new_node
+            self.tail = new_node
+            self.length = self.length + 1
+            return self.tail.value
+        if self.tail == self.head:
+            current_tail = self.tail
+            new_node = ListNode(value, prev=current_tail, next=None)
+            current_tail.next = new_node
+            self.tail = new_node
+            self.length = self.length + 1
+            return self.tail.value
+        else:
+            current_tail = self.tail
+            new_node = ListNode(value, prev=current_tail, next=None)
+            current_tail.next = new_node
+            self.tail = new_node
+            self.length = self.length + 1
+            return new_node.value
 
     """
     Removes the List's current tail node, making the 
