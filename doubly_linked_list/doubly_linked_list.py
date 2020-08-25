@@ -97,6 +97,25 @@ class DoublyLinkedList:
             self.length = self.length + 1
             return self.tail.value
 
+    def move_node_to_tail(self, value):
+        if self.tail is None:
+            new_node = ListNode(value, prev=None, next=None)
+            self.head = new_node
+            self.tail = new_node
+            return self.tail.value
+        if self.tail == self.head:
+            current_tail = self.tail
+            new_node = ListNode(value, prev=current_tail, next=None)
+            current_tail.next = new_node
+            self.tail = new_node
+            return self.tail.value
+        else:
+            current_tail = self.tail
+            new_node = ListNode(value, prev=current_tail, next=None)
+            current_tail.next = new_node
+            self.tail = new_node
+            return self.tail.value
+
     """
     Removes the List's current tail node, making the 
     current tail's previous node the new tail of the List.
@@ -136,14 +155,13 @@ class DoublyLinkedList:
     Removes the input node from its current spot in the 
     List and inserts it as the new tail node of the List.
     """
-# TODO pick up here working on appending to the back
+
     def move_to_end(self, node):
-        new_node = node
-        current_tail = self.tail
-        current_tail.next = new_node
-        new_node.prev = current_tail
-        new_node.next = None
-        self.tail = new_node
+        if node is self.tail:
+            return
+        node_value = node.value
+        self.delete(node)
+        self.add_to_tail(node_value)
 
     """
     Deletes the input node from the List, preserving the 
@@ -151,7 +169,21 @@ class DoublyLinkedList:
     """
 
     def delete(self, node):
-        pass
+        self.length -= 1
+        if self.head == self.tail:
+            self.head = None
+            self.tail = None
+        elif node == self.head:
+            self.head = node.next
+        elif node == self.tail:
+            self.tail = node.prev
+        else:
+            current_node = self.head
+            while current_node.next is not None:
+                if current_node == node:
+                    current_node.prev.next = current_node.next
+                    current_node.next.prev = current_node.prev
+                current_node = current_node.next
 
     """
     Finds and returns the maximum value of all the nodes 
