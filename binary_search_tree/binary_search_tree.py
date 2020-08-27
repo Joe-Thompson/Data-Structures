@@ -11,6 +11,7 @@ This part of the project comprises two days:
 """
 
 
+
 class BSTNode:
     def __init__(self, value):
         self.value = value
@@ -41,32 +42,47 @@ class BSTNode:
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        if self.value == target:
+        if target == self.value:
             return True
-        if self.value < target:
-            right_node = self.right
-            while self.right.right is not None:
-                if right_node == target:
-                    return True
-                elif right_node.right is None:
-                    return False
-            right_node = right_node.right
-        if self.value > target:
-            left_node = self.left
-            while self.left.left is not None:
-                if left_node == target:
-                    return True
-                elif left_node.left is None:
-                    return False
-            left_node = left_node.left
+        if target < self.value:
+            if self.left is None:
+                return False
+            else:
+                return self.left.contains(target)
+        else:
+            if self.right is None:
+                return False
+            else:
+                return self.right.contains(target)
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        if self.right is None:
+            return self.value
+        else:
+            return self.right.get_max()
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        pass
+        fn(self.value)
+        if self.left:
+            self.left.for_each(fn)
+        if self.right:
+            self.right.for_each(fn)
+
+    #  depth first traversal iterative
+    # def for_each_iterative(self, fn):
+    #     cur_node = self
+    #     stack = Stack()
+    #     stack.push(cur_node)
+    #
+    #     while len(stack) > 0:
+    #         cur_node = cur_node.pop()
+    #         if cur_node.right is not None:
+    #             stack.push(cur_node.right)
+    #         if cur_node.left is not None:
+    #             stack.push(cur_node.left)
+    #         fn(cur_node.value)
 
     # Part 2 -----------------------
 
@@ -110,9 +126,9 @@ bst.insert(3)
 bst.insert(4)
 bst.insert(2)
 
-bst.bft_print()
-bst.dft_print()
-
+# bst.bft_print()
+# bst.dft_print()
+#
 # print("elegant methods")
 # print("pre order")
 # bst.pre_order_dft()
