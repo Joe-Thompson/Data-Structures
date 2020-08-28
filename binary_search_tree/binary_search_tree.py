@@ -11,6 +11,45 @@ This part of the project comprises two days:
 """
 
 
+class Queue:
+    def __init__(self):
+        self.size = 0
+        self.storage = []
+
+    def __len__(self):
+        return self.size
+
+    def enqueue(self, value):
+        self.size = self.size + 1
+        self.storage.insert(0, value)
+
+    def dequeue(self):
+        if self.size == 0:
+            return None
+        else:
+            self.size = self.size - 1
+            return self.storage.pop(self.size)
+
+
+class Stack:
+    def __init__(self):
+        self.size = 0
+        self.storage = []
+
+    def __len__(self):
+        return self.size
+
+    def push(self, value):
+        self.storage.append(value)
+        self.size += 1
+
+    def pop(self):
+        if self.size == 0:
+            return None
+        else:
+            self.size -= 1
+            return self.storage.pop(self.size - 1)
+
 
 class BSTNode:
     def __init__(self, value):
@@ -89,17 +128,39 @@ class BSTNode:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self):
-        pass
+        if self.left:
+            self.left.in_order_print()
+        print(self.value)
+        if self.right:
+            self.right.in_order_print()
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self):
-        pass
+        queue = Queue()
+        queue.enqueue(self)
+        while len(queue) > 0:
+            current = queue.dequeue()
+            if current.left:
+                queue.enqueue(current.left)
+            if current.right:
+                queue.enqueue(current.right)
+            print(current.value)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self):
-        pass
+        stack = Stack()
+        stack.push(self)
+        while stack.size > 0:
+            current = stack.pop()
+            print(current.value)
+            if current.right:
+                stack.push(current.right)
+            if current.left:
+                stack.push(current.left)
+            print(current.value)
+# TODO dft_print method still needs work
 
     # Stretch Goals -------------------------
     # Note: Research may be required
@@ -126,13 +187,13 @@ bst.insert(3)
 bst.insert(4)
 bst.insert(2)
 
-# bst.bft_print()
-# bst.dft_print()
-#
-# print("elegant methods")
-# print("pre order")
-# bst.pre_order_dft()
-# print("in order")
-# bst.in_order_dft()
-# print("post order")
-# bst.post_order_dft()
+bst.bft_print()
+bst.dft_print()
+
+print("elegant methods")
+print("pre order")
+bst.pre_order_dft()
+print("in order")
+bst.in_order_print()
+print("post order")
+bst.post_order_dft()
