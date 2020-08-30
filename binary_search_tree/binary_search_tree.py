@@ -48,7 +48,7 @@ class Stack:
             return None
         else:
             self.size -= 1
-            return self.storage.pop(self.size - 1)
+            return self.storage.pop(self.size)
 
 
 class BSTNode:
@@ -159,8 +159,6 @@ class BSTNode:
                 stack.push(current.right)
             if current.left:
                 stack.push(current.left)
-            print(current.value)
-# TODO dft_print method still needs work
 
     # Stretch Goals -------------------------
     # Note: Research may be required
